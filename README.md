@@ -48,7 +48,7 @@ Sistema web para gestão de pizzaria, com funcionalidades para clientes e admini
 Certifique-se de ter [Docker](https://www.docker.com/) e [Docker Compose](https://docs.docker.com/compose/) instalados.
 
 ```bash
-git clone https://github.com/seu-usuario/pizzaria-fullstack.git
+git clone https://github.com/Gwin14/pizzaria-fullstack.git
 cd pizzaria-fullstack
 docker-compose up --build
 ```
