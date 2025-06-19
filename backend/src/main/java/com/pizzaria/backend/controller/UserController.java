@@ -1,12 +1,7 @@
 package com.pizzaria.backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import com.pizzaria.backend.model.User;
 import com.pizzaria.backend.repository.UserRepository;
@@ -36,4 +31,24 @@ public class UserController {
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
     }
 
+    @PutMapping("/user/{id}")
+    public User updateUser(@RequestBody User newUser, @PathVariable Long id) {
+        return userRepository.findById(id)
+                .map(user -> {
+                    user.setName(newUser.getName());
+                    user.setUsername(newUser.getUsername());
+                    user.setEmail(newUser.getEmail());
+                    return userRepository.save(user);
+                })
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+    }
+
+    @DeleteMapping("/user/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+            return;
+        }
+        throw new RuntimeException("User not found with id: " + id);
+    }
 }
