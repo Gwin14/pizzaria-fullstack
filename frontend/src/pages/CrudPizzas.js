@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-function CrudPizzas() {
+function CrudPizzas({ modoCriacao }) {
   const [pizzas, setPizzas] = useState([]);
   const [form, setForm] = useState({ nome: "", descricao: "", preco: "" });
   const [editId, setEditId] = useState(null);
@@ -65,7 +65,9 @@ function CrudPizzas() {
 
   return (
     <div style={{ margin: 30 }}>
-      <h2>Cadastro e Listagem de Pizzas</h2>
+      <h2>
+        {modoCriacao ? "Cadastrar Nova Pizza" : "Cadastro e Listagem de Pizzas"}
+      </h2>
       <form onSubmit={handleSubmit} style={{ marginBottom: 20 }}>
         <input
           name="nome"
@@ -104,31 +106,35 @@ function CrudPizzas() {
         )}
       </form>
       {mensagem && <p>{mensagem}</p>}
-      <table border="1" cellPadding={5} style={{ width: "100%" }}>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Descrição</th>
-            <th>Preço</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {pizzas.map((pizza) => (
-            <tr key={pizza.id}>
-              <td>{pizza.id}</td>
-              <td>{pizza.nome}</td>
-              <td>{pizza.descricao}</td>
-              <td>R$ {Number(pizza.preco).toFixed(2)}</td>
-              <td>
-                <button onClick={() => handleEdit(pizza)}>Editar</button>
-                <button onClick={() => handleDelete(pizza.id)}>Excluir</button>
-              </td>
+      {!modoCriacao && (
+        <table border="1" cellPadding={5} style={{ width: "100%" }}>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Descrição</th>
+              <th>Preço</th>
+              <th>Ações</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {pizzas.map((pizza) => (
+              <tr key={pizza.id}>
+                <td>{pizza.id}</td>
+                <td>{pizza.nome}</td>
+                <td>{pizza.descricao}</td>
+                <td>R$ {Number(pizza.preco).toFixed(2)}</td>
+                <td>
+                  <button onClick={() => handleEdit(pizza)}>Editar</button>
+                  <button onClick={() => handleDelete(pizza.id)}>
+                    Excluir
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }

@@ -13,6 +13,7 @@ import HistoricoPedidos from "./pages/HistoricoPedidos";
 import TodosOsItens from "./pages/TodosOsItens";
 import CrudPizzas from "./pages/CrudPizzas";
 import React from "react";
+import PainelAdmin from "./pages/PainelAdmin";
 
 function App() {
   // Exemplo: clienteId e carrinhoId fixos para teste
@@ -20,21 +21,19 @@ function App() {
   const [carrinhoId] = React.useState(1);
   return (
     <div className="App">
-      <CrudPizzas />
-      <TodosOsItens />
-      {/* <Router>
+      <Router>
         <Navbar />
         <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/adduser" element={<AddUser />} />
-          <Route exact path="/edituser/:id" element={<EditUser />} />
-          <Route exact path="/viewuser/:id" element={<ViewUser />} />
+          <Route exact path="/" element={<PainelAdmin />} />
+          <Route exact path="/novo-cliente" element={<ClienteCadastro />} />
+          <Route
+            exact
+            path="/nova-pizza"
+            element={<CrudPizzas modoCriacao={true} />}
+          />
+          {/* Adicione rotas para criação de carrinho e pedido se desejar */}
         </Routes>
-      </Router> */}
-      <ClienteCadastro />
-      <Carrinho carrinhoId={carrinhoId} />
-      <FinalizarPedido clienteId={clienteId} carrinhoId={carrinhoId} />
-      <HistoricoPedidos clienteId={clienteId} />
+      </Router>
     </div>
   );
 }
