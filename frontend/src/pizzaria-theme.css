@@ -1,0 +1,132 @@
+/*
+  Tema visual para pizzaria - paleta quente, fontes elegantes, animações suaves
+*/
+:root {
+  --cor-principal: #b22222; /* vermelho escuro */
+  --cor-secundaria: #ffcc29; /* amarelo pizza */
+  --cor-terciaria: #8b5c2a; /* marrom massa */
+  --cor-fundo: #fff8f0; /* branco quente */
+  --cor-texto: #3a2c1a;
+  --cor-card: #fff;
+  --cor-borda: #e0c097;
+  --cor-hover: #ffeb99;
+  --sombra-card: 0 4px 16px rgba(178, 34, 34, 0.08);
+  --fonte-titulo: "Merriweather", serif;
+  --fonte-texto: "Quicksand", "Segoe UI", Arial, sans-serif;
+}
+
+body,
+html {
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: var(--fonte-texto);
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: var(--fonte-titulo);
+  color: var(--cor-principal);
+  letter-spacing: 1px;
+}
+
+.card,
+.table {
+  background: var(--cor-card);
+  border-radius: 16px;
+  box-shadow: var(--sombra-card);
+  border: 1px solid var(--cor-borda);
+}
+
+.card-header {
+  background: linear-gradient(
+    90deg,
+    var(--cor-principal) 60%,
+    var(--cor-secundaria) 100%
+  );
+  color: #fff;
+  font-weight: bold;
+  border-radius: 16px 16px 0 0;
+}
+
+.btn-primary {
+  background: var(--cor-principal);
+  border: none;
+  font-weight: bold;
+  transition: background 0.2s, transform 0.2s;
+}
+.btn-primary:hover {
+  background: var(--cor-secundaria);
+  color: var(--cor-principal);
+  transform: scale(1.05);
+}
+.btn-danger {
+  background: var(--cor-terciaria);
+  border: none;
+  transition: background 0.2s, transform 0.2s;
+}
+.btn-danger:hover {
+  background: var(--cor-principal);
+  color: #fff;
+  transform: scale(1.05);
+}
+input,
+select,
+textarea {
+  border-radius: 8px;
+  border: 1px solid var(--cor-borda);
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  font-size: 1rem;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  border: 1.5px solid var(--cor-principal);
+  box-shadow: 0 0 0 2px var(--cor-hover);
+  outline: none;
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background: #fff6e0;
+}
+.table-striped > tbody > tr:hover {
+  background: var(--cor-hover);
+  transition: background 0.2s;
+}
+.menu-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(178, 34, 34, 0.1);
+  margin-right: 16px;
+  border: 2px solid var(--cor-borda);
+}
+@media (max-width: 768px) {
+  .card,
+  .table {
+    border-radius: 8px;
+  }
+  .menu-img {
+    width: 56px;
+    height: 56px;
+    margin-right: 8px;
+  }
+}
+.fade-in {
+  animation: fadeIn 0.7s ease;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

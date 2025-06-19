@@ -1,4 +1,5 @@
 import "./App.css";
+import "./pizzaria-theme.css";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./layout/Navbar";
 import Home from "./pages/Home";
@@ -22,7 +23,6 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Navbar />
         <Routes>
           <Route exact path="/" element={<PainelAdmin />} />
           <Route exact path="/novo-cliente" element={<ClienteCadastro />} />
