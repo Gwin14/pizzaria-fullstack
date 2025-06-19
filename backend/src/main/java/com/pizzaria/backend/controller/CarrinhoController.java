@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/carrinho")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = { "http://localhost:80", "http://localhost:3000" })
 public class CarrinhoController {
     @Autowired
     private CarrinhoRepository carrinhoRepository;
@@ -63,7 +63,7 @@ public class CarrinhoController {
     }
 
     // Listar todos os carrinhos
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = { "http://localhost:80", "http://localhost:3000" })
     @GetMapping("")
     public ResponseEntity<List<Carrinho>> listarTodos() {
         return ResponseEntity.ok(carrinhoRepository.findAll());

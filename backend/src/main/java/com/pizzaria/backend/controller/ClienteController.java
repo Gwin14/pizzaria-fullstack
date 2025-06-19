@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/clientes")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = { "http://localhost:80", "http://localhost:3000" })
 public class ClienteController {
     @Autowired
     private ClienteRepository clienteRepository;
@@ -22,7 +22,7 @@ public class ClienteController {
     }
 
     // Listar todos os clientes
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = { "http://localhost:80", "http://localhost:3000" })
     @GetMapping("")
     public ResponseEntity<List<Cliente>> listarTodos() {
         return ResponseEntity.ok(clienteRepository.findAll());

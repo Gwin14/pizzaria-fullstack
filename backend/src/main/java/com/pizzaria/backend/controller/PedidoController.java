@@ -3,16 +3,6 @@ package com.pizzaria.backend.controller;
 import com.pizzaria.backend.model.*;
 import com.pizzaria.backend.repository.*;
 
-import com.pizzaria.backend.model.Carrinho;
-import com.pizzaria.backend.model.Cliente;
-import com.pizzaria.backend.model.ItemPedido;
-import com.pizzaria.backend.model.Pedido;
-import com.pizzaria.backend.repository.CarrinhoRepository;
-import com.pizzaria.backend.repository.ClienteRepository;
-import com.pizzaria.backend.repository.ItemCarrinhoRepository;
-import com.pizzaria.backend.repository.ItemPedidoRepository;
-import com.pizzaria.backend.repository.PedidoRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +13,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/pedidos")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = { "http://localhost:80", "http://localhost:3000" })
 public class PedidoController {
     @Autowired
     private PedidoRepository pedidoRepository;
@@ -73,7 +63,7 @@ public class PedidoController {
     }
 
     // Listar todos os pedidos
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = { "http://localhost:80", "http://localhost:3000" })
     @GetMapping("/all")
     public ResponseEntity<List<Pedido>> listarTodosPedidos() {
         return ResponseEntity.ok(pedidoRepository.findAll());

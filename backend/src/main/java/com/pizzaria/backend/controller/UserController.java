@@ -9,7 +9,7 @@ import com.pizzaria.backend.repository.UserRepository;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = { "http://localhost:80", "http://localhost:3000" })
 public class UserController {
 
     @Autowired
