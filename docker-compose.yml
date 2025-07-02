@@ -12,7 +12,7 @@ services:
 
   frontend:
     build:
-      context: ./frontend
+      context: ./Novo_Front
       dockerfile: Dockerfile
     ports:
       - "3000:3000"

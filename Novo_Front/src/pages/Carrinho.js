@@ -20,7 +20,7 @@ function Carrinho() {
         const data = await pizzaAPI.getAll();
         setPizzas(data);
       } catch (err) {
-        console.error('Erro ao carregar pizzas:', err);
+        console.error("Erro ao carregar pizzas:", err);
       }
     };
     fetchPizzas();
@@ -36,7 +36,9 @@ function Carrinho() {
           // Buscar detalhes das pizzas para cada item
           const pizzasMap = {};
           for (const item of data) {
-            const pizzaIdNum = Number(item.pizzaId || item.pizza_id || item.pizza || item.id_pizza);
+            const pizzaIdNum = Number(
+              item.pizzaId || item.pizza_id || item.pizza || item.id_pizza
+            );
             if (pizzaIdNum && !pizzasMap[pizzaIdNum]) {
               try {
                 pizzasMap[pizzaIdNum] = await pizzaAPI.getById(pizzaIdNum);
@@ -46,19 +48,24 @@ function Carrinho() {
             }
           }
           // Adiciona detalhes ao item
-          const itensComDetalhes = data.map(item => {
-            const pizzaIdNum = Number(item.pizzaId || item.pizza_id || item.pizza || item.id_pizza);
+          const itensComDetalhes = data.map((item) => {
+            const pizzaIdNum = Number(
+              item.pizzaId || item.pizza_id || item.pizza || item.id_pizza
+            );
             return {
               ...item,
               pizzaId: pizzaIdNum || item.pizzaId,
-              pizzaNome: pizzasMap[pizzaIdNum]?.nome || item.pizzaNome || `Pizza não encontrada (id: ${pizzaIdNum || item.pizzaId})`,
-              pizzaDescricao: pizzasMap[pizzaIdNum]?.descricao || '',
-              pizzaPreco: pizzasMap[pizzaIdNum]?.preco || item.preco
-            }
+              pizzaNome:
+                pizzasMap[pizzaIdNum]?.nome ||
+                item.pizzaNome ||
+                `Pizza não encontrada (id: ${pizzaIdNum || item.pizzaId})`,
+              pizzaDescricao: pizzasMap[pizzaIdNum]?.descricao || "",
+              pizzaPreco: pizzasMap[pizzaIdNum]?.preco || item.preco,
+            };
           });
           setItens(itensComDetalhes);
         } catch (err) {
-          console.error('Erro ao carregar itens do carrinho:', err);
+          console.error("Erro ao carregar itens do carrinho:", err);
           setItens([]);
         } finally {
           setLoading(false);
@@ -74,7 +81,7 @@ function Carrinho() {
   // Atualiza preço quando pizza é selecionada
   useEffect(() => {
     if (pizzaId) {
-      const pizza = pizzas.find(p => p.id === parseInt(pizzaId));
+      const pizza = pizzas.find((p) => p.id === parseInt(pizzaId));
       if (pizza) {
         setPreco(pizza.preco);
       }
@@ -84,30 +91,51 @@ function Carrinho() {
   // Adiciona pizza ao carrinho
   const adicionarItem = async (e) => {
     e.preventDefault();
+    console.log("🟢 Tentando adicionar item ao carrinho");
+
     setMensagem("");
+
+    if (!pizzaId) {
+      console.warn("⚠️ Nenhuma pizza selecionada");
+      setMensagem("Por favor, selecione uma pizza.");
+      return;
+    }
+
     try {
       setLoading(true);
+
       const itemData = {
         pizzaId: Number(pizzaId),
         quantidade: Number(quantidade),
-        preco: Number(preco)
+        preco: Number(preco),
       };
+
+      console.log("📦 Dados enviados:", itemData, "clienteId:", clienteId);
+
       await carrinhoAPI.adicionarItem(itemData, clienteId);
+
       setMensagem("Item adicionado com sucesso!");
       setPizzaId("");
       setQuantidade(1);
       setPreco(0);
-      // Buscar novamente o carrinho do cliente para pegar o novo carrinhoId
+
+      // Buscar novamente carrinhos
       const carrinhos = await carrinhoAPI.getAll();
-      const carrinho = carrinhos.find((c) => c.cliente && c.cliente.id === Number(clienteId));
+      console.log("🛒 Carrinhos retornados:", carrinhos);
+
+      const carrinho = carrinhos.find((c) => c.clienteId === Number(clienteId));
       if (carrinho) {
         localStorage.setItem("carrinhoId", carrinho.id);
         const data = await carrinhoAPI.getItens(carrinho.id);
         setItens(data);
+      } else {
+        console.warn("⚠️ Carrinho do cliente não encontrado.");
       }
     } catch (err) {
-      console.error('Erro ao adicionar item:', err);
-      setMensagem("Erro ao adicionar item. Verifique se o backend está rodando.");
+      console.error("❌ Erro ao adicionar item:", err);
+      setMensagem(
+        "Erro ao adicionar item. Verifique se o backend está rodando."
+      );
     } finally {
       setLoading(false);
     }
@@ -116,14 +144,14 @@ function Carrinho() {
   // Remove item
   const removerItem = async (itemId) => {
     if (!window.confirm("Deseja remover este item do carrinho?")) return;
-    
+
     try {
       setLoading(true);
       await carrinhoAPI.removerItem(itemId);
       setItens(itens.filter((i) => i.id !== itemId));
       setMensagem("Item removido com sucesso!");
     } catch (err) {
-      console.error('Erro ao remover item:', err);
+      console.error("Erro ao remover item:", err);
       setMensagem("Erro ao remover item. Verifique se o backend está rodando.");
     } finally {
       setLoading(false);
@@ -138,8 +166,10 @@ function Carrinho() {
       const data = await carrinhoAPI.getItens(carrinhoId);
       setItens(data);
     } catch (err) {
-      console.error('Erro ao atualizar quantidade:', err);
-      setMensagem("Erro ao atualizar quantidade. Verifique se o backend está rodando.");
+      console.error("Erro ao atualizar quantidade:", err);
+      setMensagem(
+        "Erro ao atualizar quantidade. Verifique se o backend está rodando."
+      );
     }
   };
 
@@ -168,7 +198,11 @@ function Carrinho() {
         <h1>🛒 Carrinho de Compras</h1>
 
         {mensagem && (
-          <div className={`alert alert-${mensagem.includes('sucesso') ? 'success' : 'danger'}`}>
+          <div
+            className={`alert alert-${
+              mensagem.includes("sucesso") ? "success" : "danger"
+            }`}
+          >
             {mensagem}
           </div>
         )}
@@ -193,7 +227,7 @@ function Carrinho() {
                 ))}
               </select>
             </div>
-            
+
             <div className="form-group">
               <label htmlFor="quantidade">Quantidade</label>
               <input
@@ -207,7 +241,7 @@ function Carrinho() {
                 disabled={loading}
               />
             </div>
-            
+
             <div className="form-group">
               <label htmlFor="preco">Valor(R$)</label>
               <input
@@ -222,8 +256,12 @@ function Carrinho() {
                 readOnly
               />
             </div>
-            
-            <button type="submit" className="btn btn-primary" disabled={loading}>
+
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={loading}
+            >
               {loading ? "⏳ Processando..." : "➕ Adicionar Pizza"}
             </button>
           </form>
@@ -256,7 +294,9 @@ function Carrinho() {
                     return (
                       <tr key={item.id || Math.random()}>
                         <td className="text-primary fw-bold">
-                          {item.pizzaNome ? item.pizzaNome : `Pizza não encontrada (id: ${item.pizzaId})`}
+                          {item.pizzaNome
+                            ? item.pizzaNome
+                            : `Pizza não encontrada (id: ${item.pizzaId})`}
                           <br />
                           <small>{item.pizzaDescricao}</small>
                         </td>
@@ -271,7 +311,12 @@ function Carrinho() {
                                 quantidade: Number(e.target.value),
                               })
                             }
-                            style={{ width: 80, padding: '5px', borderRadius: '3px', border: '1px solid #ddd' }}
+                            style={{
+                              width: 80,
+                              padding: "5px",
+                              borderRadius: "3px",
+                              border: "1px solid #ddd",
+                            }}
                             disabled={loading}
                           />
                         </td>
@@ -279,12 +324,14 @@ function Carrinho() {
                           R$ {Number(item.preco || 0).toFixed(2)}
                         </td>
                         <td className="text-danger fw-bold">
-                          R$ {(
-                            Number(item.preco || 0) * Number(item.quantidade || 0)
+                          R${" "}
+                          {(
+                            Number(item.preco || 0) *
+                            Number(item.quantidade || 0)
                           ).toFixed(2)}
                         </td>
                         <td>
-                          <button 
+                          <button
                             className="btn btn-danger btn-sm"
                             onClick={() => removerItem(item.id)}
                             disabled={loading}
@@ -298,14 +345,14 @@ function Carrinho() {
                 </tbody>
               </table>
             </div>
-            
+
             <div className="card mt-3">
               <div className="d-flex justify-content-between align-items-center">
                 <h3 className="mb-0">Total do Pedido</h3>
                 <h2 className="text-primary mb-0">R$ {total.toFixed(2)}</h2>
               </div>
             </div>
-            
+
             <div className="d-flex gap-3 mt-3">
               <Link to="/pizzas" className="btn btn-secondary">
                 ← Continuar Comprando

@@ -15,25 +15,33 @@ import java.util.Optional;
 @RequestMapping("/carrinho")
 @CrossOrigin(origins = { "http://localhost:80", "http://localhost:3000" })
 public class CarrinhoController {
+
     @Autowired
     private CarrinhoRepository carrinhoRepository;
+
     @Autowired
     private ItemCarrinhoRepository itemCarrinhoRepository;
 
-    // Adicionar pizza ao carrinho
+    // Adicionar item ao carrinho
     @PostMapping
-    public ResponseEntity<ItemCarrinho> adicionarItem(@RequestBody ItemCarrinho item) {
-        Carrinho carrinho = carrinhoRepository.findById(item.getCarrinho().getId()).orElse(null);
+    public ResponseEntity<ItemCarrinho> adicionarItem(
+            @RequestBody ItemCarrinho item,
+            @RequestParam Long clienteId) {
+        // Buscar ou criar carrinho do cliente
+        Carrinho carrinho = carrinhoRepository.findByClienteId(clienteId).orElse(null);
         if (carrinho == null) {
             carrinho = new Carrinho();
+            carrinho.setClienteId(clienteId);
             carrinho = carrinhoRepository.save(carrinho);
         }
+
+        // Associar item ao carrinho
         item.setCarrinho(carrinho);
         ItemCarrinho salvo = itemCarrinhoRepository.save(item);
         return ResponseEntity.ok(salvo);
     }
 
-    // Listar itens do carrinho
+    // Listar itens de um carrinho
     @GetMapping("/{carrinhoId}")
     public ResponseEntity<List<ItemCarrinho>> listarItens(@PathVariable Long carrinhoId) {
         Carrinho carrinho = carrinhoRepository.findById(carrinhoId).orElse(null);
@@ -49,21 +57,21 @@ public class CarrinhoController {
         return ResponseEntity.noContent().build();
     }
 
-    // Atualizar quantidade
+    // Atualizar quantidade/preço de um item
     @PutMapping
     public ResponseEntity<ItemCarrinho> atualizarQuantidade(@RequestBody ItemCarrinho item) {
         Optional<ItemCarrinho> opt = itemCarrinhoRepository.findById(item.getId());
         if (opt.isEmpty())
             return ResponseEntity.notFound().build();
+
         ItemCarrinho existente = opt.get();
         existente.setQuantidade(item.getQuantidade());
         existente.setPreco(item.getPreco());
-        itemCarrinhoRepository.save(existente);
-        return ResponseEntity.ok(existente);
+
+        return ResponseEntity.ok(itemCarrinhoRepository.save(existente));
     }
 
     // Listar todos os carrinhos
-    @CrossOrigin(origins = { "http://localhost:80", "http://localhost:3000" })
     @GetMapping("")
     public ResponseEntity<List<Carrinho>> listarTodos() {
         return ResponseEntity.ok(carrinhoRepository.findAll());
