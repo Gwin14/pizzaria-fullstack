@@ -1,8 +1,0 @@
-package com.pizzaria.backend.repository;
-
-import com.pizzaria.backend.model.Cliente;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface ClienteRepository extends JpaRepository<Cliente, Long> {
-    Cliente findByEmail(String email); // Importante para o login
-}
