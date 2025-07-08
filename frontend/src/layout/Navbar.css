@@ -1,0 +1,228 @@
+.navbar {
+  background: #fff;
+  border-bottom: 2px solid #ffe066;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 0 0 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-brand {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #ffe066;
+  letter-spacing: 2px;
+  font-family: 'Montserrat', Arial, sans-serif;
+  margin-bottom: 12px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.nav-link {
+  color: #3a2c1a;
+  font-size: 1.2rem;
+  font-family: 'Montserrat', Arial, sans-serif;
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+}
+
+.nav-link:hover, .nav-link.active {
+  background: #fff9c4;
+  color: #222;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  color: #3a2c1a;
+  font-size: 1.1rem;
+  font-family: 'Montserrat', Arial, sans-serif;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.logout-btn:hover {
+  background: #fff9c4;
+  color: #222;
+}
+
+@media (max-width: 700px) {
+  .nav-links {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .nav-brand {
+    font-size: 2rem;
+  }
+}
+
+.navigation {
+  background: linear-gradient(135deg, #ffe066 0%, #ffd700 100%) !important;
+  font-family: 'Montserrat', Arial, sans-serif !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+}
+
+.nav-brand a {
+  color: #3a2c1a !important;
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: bold;
+  transition: transform 0.3s ease;
+  font-family: 'Montserrat', Arial, sans-serif !important;
+}
+
+.nav-brand a:hover {
+  transform: scale(1.05);
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-link {
+  color: #3a2c1a !important;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  position: relative;
+  font-family: 'Montserrat', Arial, sans-serif !important;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.nav-link.active {
+  background-color: #fff9c4 !important;
+  color: #3a2c1a !important;
+}
+
+.cart-link {
+  position: relative;
+}
+
+.cart-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #ff4757;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #3a2c1a !important;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  font-family: 'Montserrat', Arial, sans-serif !important;
+}
+
+.logout-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.navbar-toggler {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.navbar-collapse {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .navbar-toggler {
+    display: block;
+  }
+  
+  .navbar-collapse {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-collapse.show {
+    display: flex;
+  }
+  
+  .nav-menu {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+  
+  .nav-link {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .nav-container {
+    flex-direction: column;
+    height: auto;
+    padding: 15px 20px;
+  }
+  
+  .nav-brand {
+    margin-bottom: 15px;
+  }
+} 
